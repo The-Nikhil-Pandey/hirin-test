@@ -7,3 +7,4 @@ calibration_results.json
 calibrate_out.txt
 dataset/
 .env
+client/dist/
