@@ -1,5 +1,5 @@
 // Transcript handling: parse speaker-attributed VTT (Zoom export) or
-// transcribe audio locally with Whisper (@xenova/transformers, ONNX, no API key).
+// transcribe audio locally with Whisper — no API key needed.
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
@@ -66,7 +66,7 @@ export async function transcribe(videoPath, onProgress) {
   return { utterances: utts, duration: utts.length ? utts[utts.length - 1].end : 0 };
 }
 
-// Prefer provided VTT (keeps speaker labels); otherwise whisper.
+// Prefer a provided VTT (it keeps speaker labels); otherwise whisper.
 export async function loadTranscript(videoPath, vttPath, onProgress) {
   if (vttPath && fs.existsSync(vttPath)) {
     const t = parseVtt(vttPath);

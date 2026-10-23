@@ -1,7 +1,6 @@
-// Rubric scoring -> quality label + evidence-backed observations.
-// Rubric derived from the organiser's feedbacks.pdf: excellent classes show
-// rapport building, one-to-one questions to every child, branded background /
-// camera on, homework assigned, and energetic pleasant delivery.
+// Rubric scoring -> quality label + observations with evidence.
+// Mirrors the organiser's feedback: rapport, one-to-one questions,
+// homework, energetic delivery, camera on.
 
 const clamp = (x, lo = 0, hi = 1) => Math.max(lo, Math.min(hi, x));
 
@@ -31,7 +30,7 @@ export function scoreClass(tf, af, vf) {
   detail.switches_per_min = +sw.toFixed(1);
   if (sw < 2) obs.push(['-', `Low back-and-forth (${sw.toFixed(1)} speaker turns/min) — long monologue stretches`]);
 
-  // substantive student responses (>=5 words) — real engagement vs one-word drills
+  // real engagement = students giving answers longer than one word
   const sub = tf.student_substantive_ratio || 0;
   inter += clamp(sub / 0.35) * 3;
   if (tf.student_utterances > 20 && sub < 0.15)
@@ -109,7 +108,8 @@ export function scoreClass(tf, af, vf) {
   score += vis;
   detail.visual = +vis.toFixed(1);
 
-  // ---------- severity gates (mirroring human feedback patterns) ----------
+  // ---------- severity gates ----------
+  // a class with these problems can't score high no matter the interaction
   const caps = [];
   if (vf && vf.available) {
     const offRatio = Math.max(vf.black_ratio || 0, vf.dark_frame_ratio || 0);

@@ -1,4 +1,4 @@
-// Interaction features derived from the speaker-attributed transcript.
+// Interaction features from the speaker-attributed transcript.
 const GREET = /\b(hi|hello|hey|good (morning|afternoon|evening)|namaste|welcome)\b/i;
 const HOWAREYOU = /\b(how are you|how'?s it going|what did you do|how was your|weekend|what'?s up|tell me about)\b/i;
 const HOMEWORK = /\b(home ?work|h\.?w\.?|assignment|practice (this|it|at home)|try (this|it) at home|share (it|your)|send (me|it))\b/i;
@@ -26,7 +26,7 @@ export function transcriptFeatures(t) {
   const studentUtts = utts.filter(u => u.speaker !== teacher);
   const totalWords = Object.values(words).reduce((a, b) => a + b, 0);
 
-  // teaching questions only — exclude housekeeping/tech-check lines
+  // count only real teaching questions, skip tech-check lines
   let questions = 0;
   for (const u of teacherUtts) {
     if (HOUSEKEEP.test(u.text) && u.text.split(/\s+/).length <= 8) continue;
@@ -81,7 +81,7 @@ export function transcriptFeatures(t) {
     name_calls: nameCalls, name_call_counts: nameCallCounts,
     teacher_utterances: teacherUtts.length,
     student_utterances: utts.length - teacherUtts.length,
-    // shallow-drill detector: fraction of student turns that are substantive (>=5 words)
+    // how many student answers are more than a couple of words
     student_substantive_ratio: studentUtts.length
       ? studentUtts.filter(u => u.text.split(/\s+/).length >= 5).length / studentUtts.length
       : 0,

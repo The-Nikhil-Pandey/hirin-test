@@ -1,3 +1,4 @@
+// end-to-end: video (+ optional VTT) -> features -> rubric -> label + observations
 import { loadTranscript } from './transcript.js';
 import { transcriptFeatures } from './transcriptFeatures.js';
 import { audioFeatures, videoFeatures } from './mediaFeatures.js';

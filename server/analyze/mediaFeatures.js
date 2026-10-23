@@ -1,5 +1,4 @@
-// Media features from ffmpeg: silence ratio, loudness, black (camera-off) ratio,
-// frozen-screen ratio, mean brightness — all via ffmpeg filters, no extra deps.
+// Media features via ffmpeg filters: silence, loudness, black/frozen frames, brightness.
 import { execFile } from 'child_process';
 import fs from 'fs';
 import path from 'path';
@@ -32,8 +31,8 @@ export async function audioFeatures(mediaPath) {
 }
 
 export async function videoFeatures(videoPath) {
-  // ONE decode pass: split video into 3 analysis chains —
-  // blackdetect (camera off), freezedetect (static screen), tiny-gray fps (brightness).
+  // one decode pass split into 3 chains: blackdetect (camera off),
+  // freezedetect (static screen), tiny grayscale frames (brightness)
   const rawOut = path.join(os.tmpdir(), `bright_${Date.now()}.raw`);
   const log = await ffmpegLog(['-i', videoPath, '-filter_complex',
     '[0:v]split=3[a][b][c];' +
