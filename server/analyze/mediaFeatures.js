@@ -3,11 +3,11 @@ import { execFile } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
-import { FFMPEG } from './ffmpeg.js';
+import { FFMPEG_PATH } from './ffmpeg.js';
 
 function ffmpegLog(args) {
   return new Promise((resolve) => {
-    execFile(FFMPEG, args, { maxBuffer: 1 << 28 }, (err, stdout, stderr) => resolve(stderr || ''));
+    execFile(FFMPEG_PATH, args, { maxBuffer: 1 << 28 }, (err, stdout, stderr) => resolve(stderr || ''));
   });
 }
 

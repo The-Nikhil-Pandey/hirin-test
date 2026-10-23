@@ -33,5 +33,12 @@ app.post('/api/analyze', upload.fields([
 // quick health check
 app.get('/api/health', (_req, res) => res.json({ ok: true }));
 
+// serve the built React client (production: same origin, single port)
+const dist = path.join(__dirname, '..', 'client', 'dist');
+if (fs.existsSync(dist)) {
+  app.use(express.static(dist));
+  app.get('*', (_req, res) => res.sendFile(path.join(dist, 'index.html')));
+}
+
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`API listening on http://localhost:${PORT}`));
