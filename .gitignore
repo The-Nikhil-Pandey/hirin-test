@@ -1,0 +1,9 @@
+node_modules/
+uploads/
+*.pcm
+*.raw
+feature_cache.json
+calibration_results.json
+calibrate_out.txt
+dataset/
+.env
